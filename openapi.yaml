@@ -1,0 +1,120 @@
+openapi: 3.0.1
+info:
+  title: Estados API
+  description: API com informações sobre Estados
+  version: 1.0.0
+  contact:
+    name: Eduardo Kuiava
+    email: eduardo.kuiava_BOLS@compasso.com.br
+externalDocs:
+  description: Código API disponível no GitHub clique aqui.
+  url: https://github.com/EduardoKuiava/AvaliacaoTresCompassoQuest-oDois.git
+servers: 
+- url: http://localhost:8080
+  description: API Teste Estados
+paths:
+  /api/states:
+    get:
+      summary: Lista por região
+      parameters: 
+      - name: regiao
+        in: query
+        schema:
+          type: array
+          items:
+            $ref: "#/components/schemas/Estado"
+    post:
+      summary: posta novo estado
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Estado"
+      responses:
+        201:
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estado"
+  /api/states/filtrarArea:
+    get:
+      summary: Filtra pela area em ordem dec
+      responses:
+        200:
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Estado"
+  /api/states/filtrarPopulacao:
+    get:
+      summary: Filtra pela populacao em ordem dec
+      responses:
+        200:
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Estado"
+  /api/states/{id}:
+    parameters:
+      name: id
+      in: path
+      schema:
+        type: integer
+      required: true
+    put:
+      summary: atualiza por id
+      requestBody:
+        content:
+          appication/json:
+            schema:
+              $ref: "#/components/schemas/Estado"
+      responses:
+        201:
+          description: Sucesso
+          content:
+            appication/json:
+              schema:
+                $ref: "#/components/schemas/Estado"
+        404:
+          description: não tem obj com essa id
+          content:
+            appication/json:
+              schema:
+                example: "Não foi Encontrado"
+    delete:
+      summary: deleta pelo id passado
+      responses:
+        200:
+          description: sucesso
+        404:
+          description: não tem obj com essa id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estado"
+  
+components:
+  schemas:
+    Estado:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        regiao:
+          type: string
+        populacao:
+          type: integer
+        capital:
+         type: string
+        area:
+          type: number
+          format: double
